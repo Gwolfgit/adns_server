@@ -22,7 +22,6 @@ import hashlib
 import base64
 import time
 import enum
-import random
 import binascii
 import yaml
 import siphash
@@ -43,6 +42,7 @@ from dns.rdtypes.ANY import NSEC3
 from sortedcontainers import SortedDict
 
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
+import secrets
 
 
 PROGNAME = os.path.basename(sys.argv[0])
@@ -1561,7 +1561,7 @@ def main(arguments):
     global PREFS
 
     process_args(arguments[1:])
-    PREFS.cookie_secret = binascii.hexlify(random.randbytes(8))
+    PREFS.cookie_secret = binascii.hexlify(secrets.SystemRandom().randbytes(8))
 
     if PREFS.daemon:
         daemon(dirname=PREFS.workdir)
